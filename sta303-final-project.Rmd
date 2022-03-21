@@ -1,0 +1,126 @@
+---
+title: "Report title"
+subtitle: "Subtitle"
+author: "Report prepared for MINGAR by [consulting company name]"
+date: 2022-04-07
+lang: "en"
+output:
+  pdf_document:
+    template: report.tex
+    toc: true
+    toc_depth: 2
+titlepage: true
+titlepage-color: "6C3082"
+titlepage-text-color: "FFFFFF"
+titlepage-rule-color: "FFFFFF"
+titlepage-rule-height: 2
+---
+
+```{r, message = FALSE, echo=FALSE}
+library(tidyverse)
+library(lme4)
+library(rvest)
+library(polite)
+library(lmtest)
+library()
+
+# this should suppress all code and messages
+knitr::opts_chunk$set(include=FALSE)
+```
+
+# General comments (you can delete this section)
+
+_Before making any changes, knit this Rnd to PDF and change the name of the PDf to something like 'original-instructions.pdf', or whatever you like (it is just for your reference).. Then you can delete this section and if you want to check what it said, just open the other PDF. You don't HAVE to use this particular template, but you DO need to write you report in RMarkdown and include a cover page._
+
+_The cover page must be a single stand alone page and have:_
+
+*	_A title and subtitle_
+* _"Report prepared for MINGAR by" your company name_
+*	_Date (assessment submission date is fine)_
+
+_You can change the colour of this cover to any colour you would like by replacing 6C3082 in the YAML above (`titlepage-color:`) to another hex code. You could use this tool to help you:_ https://htmlcolorcodes.com/color-picker/
+
+_Note: There should NOT be a table of contents on the cover page. It should look like a cover._
+
+\newpage
+# Executive summary
+
+_Guidelines for the executive summary:_
+
+* _No more than two pages_
+* _Language is appropriate for a non-technical audience_
+* _Bullet points are used where appropriate_
+*	_A small number of key visualizations and/or tables are included_
+*	_All research questions are addressed_
+
+
+_The [module 4 writing prompt](https://sta303-bolton.github.io/sta303-w22-courseguide/knowledge-basket-writing-and-peer-feedback.html#module-4-writing-task) provides some tips and information about writing executive summaries._
+
+
+\newpage
+# Technical report
+_This part of the report is much more comprehensive than the executive summary. The audience is statistics/data-minded people, but you should NOT include code or unformatted R output here._
+
+
+## Introduction
+
+_Provide a brief introduction to your report and outline what the report will cover. This section is valuable for setting scope and expectations. _
+
+### Research questions
+_Use bullet points to to describe the research questions you are going to address. Write in full sentences._
+
+## Informative title for section addressing a research question
+
+_For each research question, you will want to briefly describe any data manipulation, show some exploratory plots/summary tables, report on any methods you use (i.e. models you fit) and the conclusions you draw from these_
+
+```{r}
+# This chunk provides an example of some things you can do with RMarkdown to make your report creation process easier
+
+# read in the data
+device_data <- read_csv("raw-data/device.Rds")
+
+# create a visualisation
+device_data %>% 
+  ggplot(aes(x = ))
+
+```
+
+## Informative title for section addressing a research question
+
+
+
+## Discussion
+
+_In this section you will summarize your findings across all the research questions and discuss the strengths and limitations of your work. It doesn't have to be long, but keep in mind that often people will just skim the intro and the discussion of a document like this, so make sure it is useful as a semi-standalone section (doesn't have to be completely standalone like the executive summary)._
+
+### Strengths and limitations
+
+\newpage
+# Consultant information
+## Consultant profiles
+
+*Complete this section with a brief bio for each member of your group. If you are completing the project individually, you only need to complete one for yourself. In that case, change the title of this section to 'Consultant profile' instead. Examples below. This section is only marked for completeness, clarity and professionalism, not 'truth' so you can write it as if we're a few years in the future. Put your current degree in as completed and/or add your first choice grad school program, whatever you like. What skills related skills would you most like to highlight? What job title do you want?*
+
+**Statsy McStatsstats**. Statsy is a senior consultant with Eminence Analytics. She specializes in data visualization. Statsy earned her Bachelor of Science, Specialist in Statistics Methods and Practice, from the University of Toronto in 2023.
+
+**Datana Scatterplot**. Datana is a junior consultant with Eminence Analytics. They specialize in reproducible analysis and statistical communication. Datana earned their Bachelor of Science, Majoring in Computer Science and Statistics from the University of Toronto in 2024.
+
+## Code of ethical conduct
+
+_This section should be fairly short, no more than half a page. Assume a general audience, much like your executive summary._
+
+* _Make at least three relevant statements about your company’s approach to ethical statistical consulting. These should be appropriately in line with professional conduct advice like the (Statistical Society of Canada Code of Conduct)[https://ssc.ca/sites/default/files/data/Members/public/Accreditation/ethics_e.pdf] or the (Ethical Guidelines for Statistical Practice from the American Statistical Society)[https://www.amstat.org/ASA/Your-Career/Ethical-Guidelines-for-Statistical-Practice.aspx]. For example, "the customer is always right" ISN’T the type of thing an ethical statistical consultant would include._
+*	_Be very careful not to just copy and paste from these other documents! Put things in your own words._
+
+## Appendix
+
+_These appendices should outline in more detail the steps taken to access the following datasets. They should NOT include code, but should briefly describe the steps and important considerations. I.e., show that you understand what needs to be considered when web scraping, protecting licensed data, etc._
+
+## Web scraping industry data on fitness tracker devices
+
+## Accessing Census data on median household income
+
+## Accessing postcode conversion files
+
+
+__Final advice: KNIT EARLY AND OFTEN!__
