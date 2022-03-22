@@ -11,11 +11,10 @@ output:
 - You should __comment__ your code clearly to show what you've done to prepare the data.
 
 - The purpose of this file is to use the data in the `data-raw` folder to create the data you will use in the report. The data you will use in the report should be saved in the `data` folder. It is good professional practice to make sure you're never directly modifying your raw data, but instead creating new datasets based on merges/manipulations that you need to reuse.
-  - Download the data for the `data-raw` folder here: https://q.utoronto.ca/files/20041171/download?download_frd=1
 
 - Make sure you've taken a look at the hints for the web scraping and census API. 
 
-- You may find the `write_rds()` function from the `readr` package helpful.
+- You may find the `write_rds()` function from the `readr` package helpful (it is loaded as part of the `tidyverse`).
 
 - You do not need to keep the structure below.
 
