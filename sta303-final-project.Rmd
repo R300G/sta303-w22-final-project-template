@@ -1,6 +1,6 @@
 ---
 title: "Report title"
-subtitle: "Subtitle"
+subtitle: "Subtitle that indicates findings"
 author: "Report prepared for MINGAR by [consulting company name]"
 date: 2022-04-07
 lang: "en"
@@ -30,11 +30,11 @@ knitr::opts_chunk$set(include=FALSE)
 
 # General comments (you can delete this section)
 
-_Before making any changes, knit this Rnd to PDF and change the name of the PDf to something like 'original-instructions.pdf', or whatever you like (it is just for your reference).. Then you can delete this section and if you want to check what it said, just open the other PDF. You don't HAVE to use this particular template, but you DO need to write you report in RMarkdown and include a cover page._
+_Before making any changes, knit this Rmd to PDF and change the name of the PDf to something like 'original-instructions.pdf', or whatever you like (it is just for your reference).. Then you can delete this section and if you want to check what it said, just open the other PDF. You don't HAVE to use this particular template, but you DO need to write you report in RMarkdown and include a cover page._
 
 _The cover page must be a single stand alone page and have:_
 
-*	_A title and subtitle_
+*	_A title and subtitle (that indicate your findings)_
 * _"Report prepared for MINGAR by" your company name_
 *	_Date (assessment submission date is fine)_
 
@@ -74,19 +74,18 @@ _Use bullet points to to describe the research questions you are going to addres
 _For each research question, you will want to briefly describe any data manipulation, show some exploratory plots/summary tables, report on any methods you use (i.e. models you fit) and the conclusions you draw from these_
 
 ```{r}
-# This chunk provides an example of some things you can do with RMarkdown to make your report creation process easier
+# This chunk provides an example of some things you can do with RMarkdown 
 
-# read in the data
-device_data <- read_csv("raw-data/device.Rds")
+# read in the data (this will only work once you've set up the data!)
+device_data <- read_csv("data-raw/device.Rds")
 
-# create a visualisation
+# create a visualization
 device_data %>% 
   ggplot(aes(x = ))
 
 ```
 
 ## Informative title for section addressing a research question
-
 
 
 ## Discussion
@@ -109,10 +108,15 @@ _In this section you will summarize your findings across all the research questi
 
 _This section should be fairly short, no more than half a page. Assume a general audience, much like your executive summary._
 
-* _Make at least three relevant statements about your company’s approach to ethical statistical consulting. These should be appropriately in line with professional conduct advice like the (Statistical Society of Canada Code of Conduct)[https://ssc.ca/sites/default/files/data/Members/public/Accreditation/ethics_e.pdf] or the (Ethical Guidelines for Statistical Practice from the American Statistical Society)[https://www.amstat.org/ASA/Your-Career/Ethical-Guidelines-for-Statistical-Practice.aspx]. For example, "the customer is always right" ISN’T the type of thing an ethical statistical consultant would include._
+* _Make at least three relevant statements about your company's approach to ethical statistical consulting. These should be appropriately in line with professional conduct advice like the (Statistical Society of Canada Code of Conduct)[https://ssc.ca/sites/default/files/data/Members/public/Accreditation/ethics_e.pdf] or the (Ethical Guidelines for Statistical Practice from the American Statistical Society)[https://www.amstat.org/ASA/Your-Career/Ethical-Guidelines-for-Statistical-Practice.aspx]. For example, "the customer is always right" ISN'T the type of thing an ethical statistical consultant would include._
 *	_Be very careful not to just copy and paste from these other documents! Put things in your own words._
 
-## Appendix
+
+# References
+
+_You don't need to cite course materials, but consider all the the place you got data from, as well as the packages used and R itself. These are all things you should consider citing. Likewise, you might use some external resources on the emoji skintones/Fitzpatrick scale, etc._
+
+# Appendix
 
 _These appendices should outline in more detail the steps taken to access the following datasets. They should NOT include code, but should briefly describe the steps and important considerations. I.e., show that you understand what needs to be considered when web scraping, protecting licensed data, etc._
 
