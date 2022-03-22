@@ -3,5 +3,4 @@
 .RData
 .Ruserdata
 
-raw-data/
-raw-data.zip
+.DS_Store
