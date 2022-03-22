@@ -115,7 +115,7 @@ _This section should be fairly short, no more than half a page. Assume a general
 \newpage
 # References
 
-_You don't need to cite course materials, but consider all the the place you got data from, as well as the packages used and R itself. These are all things you should consider citing. Likewise, you might use some external resources on the emoji skintones/Fitzpatrick scale, etc._
+_You don't need to cite course materials, but consider all the the places you got data from, as well as the packages used and R itself. These are all things you should consider citing. Likewise, you might use some external resources on the emoji skin tones/Fitzpatrick scale, etc._
 
 \newpage
 # Appendix
