@@ -22,13 +22,23 @@ output:
 
 ```{r, libraries}
 # Set up any libraries you need
-
+library(tidyverse)
+library(rio)
+library(readr)
+library(plotly)
+library(polite)
+library(rvest)
+library(cancensus)
 ```
 
 # Loading client data
 
 ```{r}
-
+break_glass <- read_rds("data-raw/break_glass_in_case_of_emergency.Rds")
+cust_dev <- read_rds("data-raw/cust_dev.Rds")
+cust_sleep <- read_rds("data-raw/cust_sleep.Rds")
+customer <- read_rds("data-raw/customer.Rds")
+device <- read_rds("data-raw/device.Rds")
 ```
 
 # Getting external data
@@ -37,11 +47,55 @@ output:
 
 ```{r}
 
+
+url <- "https://fitnesstrackerinfohub.netlify.app/"
+
+# Make sure this code is updated appropriately to provide 
+# informative user_agent details
+target <- bow(url,
+              user_agent = "charlesjiahong.lu@utoronto.ca for STA303/1002 project",
+              force = TRUE)
+
+# Any details provided in the robots text on crawl delays and 
+# which agents are allowed to scrape
+target
+
+html <- scrape(target)
+
+device_data <- html %>% 
+  html_elements("table") %>% 
+  html_table() %>% 
+  pluck(1) # added, in case you're getting a list format
+
+device_data
 ```
 
 # Census API
 
 ```{r}
 
+options(cancensus.api_key = "CensusMapper_634a3db5365fd4910ad140001c90f3ee",
+        cancensus.cache_path = "cache") # this sets a folder for your cache
+
+
+# get all regions as at the 2016 Census (2020 not up yet)
+regions <- list_census_regions(dataset = "CA16")
+
+regions_filtered <-  regions %>% 
+  filter(level == "CSD") %>% # Figure out what CSD means in Census data
+  as_census_region_list()
+
+# This can take a while
+# We want to get household median income
+census_data_csd <- get_census(dataset='CA16', regions = regions_filtered,
+                          vectors=c("v_CA16_2397"), 
+                          level='CSD', geo_format = "sf")
+
+# Simplify to only needed variables
+median_income <- census_data_csd %>% 
+  as_tibble() %>% 
+  select(CSDuid = GeoUID, contains("median"), Population) %>% 
+  mutate(CSDuid = parse_number(CSDuid)) %>% 
+  rename(hhld_median_inc = 2)
 ```
 
