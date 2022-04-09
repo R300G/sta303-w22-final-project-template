@@ -2,7 +2,7 @@
 title: "Report title"
 subtitle: "Subtitle that indicates findings"
 author: "Report prepared for MINGAR by [consulting company name]"
-date: 2022-04-07
+date: 2022-04-11
 lang: "en"
 output:
   pdf_document:
@@ -100,17 +100,13 @@ _In this section you will summarize your findings across all the research questi
 
 *Complete this section with a brief bio for each member of your group. If you are completing the project individually, you only need to complete one for yourself. In that case, change the title of this section to 'Consultant profile' instead. Examples below. This section is only marked for completeness, clarity and professionalism, not 'truth' so you can write it as if we're a few years in the future. Put your current degree in as completed and/or add your first choice grad school program, whatever you like. What skills related skills would you most like to highlight? What job title do you want?*
 
-**Statsy McStatsstats**. Statsy is a senior consultant with Eminence Analytics. She specializes in data visualization. Statsy earned her Bachelor of Science, Specialist in Statistics Methods and Practice, from the University of Toronto in 2023.
+**Aaisha Eid**. Aaisha is a senior consultant at Google. She specializes in reproducible analysis and statistical communication. Aaisha earned her Bachelor of Science, Specialist in Statistics Machine Learning and Data Mining, from the University of Toronto in 2022.
 
-**Datana Scatterplot**. Datana is a junior consultant with Eminence Analytics. They specialize in reproducible analysis and statistical communication. Datana earned their Bachelor of Science, Majoring in Computer Science and Statistics from the University of Toronto in 2024.
+**Charles Lu**. Charles is a junior consultant with Eminence Analytics. He specializes in data visualization. Charles earned their Bachelor of Science, Majoring in Computer Science and Statistics from the University of Toronto in 2024.
 
 ## Code of ethical conduct
 
-_This section should be fairly short, no more than half a page. Assume a general audience, much like your executive summary._
-
-* _Make at least three relevant statements about your company's approach to ethical statistical consulting. These should be appropriately in line with professional conduct advice like the (Statistical Society of Canada Code of Conduct)[https://ssc.ca/sites/default/files/data/Members/public/Accreditation/ethics_e.pdf] or the (Ethical Guidelines for Statistical Practice from the American Statistical Society)[https://www.amstat.org/ASA/Your-Career/Ethical-Guidelines-for-Statistical-Practice.aspx]. For example, "the customer is always right" ISN'T the type of thing an ethical statistical consultant would include._
-*	_Be very careful not to just copy and paste from these other documents! Put things in your own words._
-
+Simplicity ensures that any information shared between itself and its clients remain confidential and protected against sale for personal gain or benefit. Conflicts of interest will surely be communicated to clients transparently and accordingly. Personal information provided to by clients will be treated anonymously and respectfully. Finally, Simplicity is operated by proud statisticians that uphold the professional statistical standards of procedure and analysis.
 
 \newpage
 # References
