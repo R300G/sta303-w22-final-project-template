@@ -197,7 +197,7 @@ m4 <-glm(active_advance_user~scales::rescale(hhld_median_inc)+scales::rescale(ag
 #lrtest(m2,m4)
 #lrtest(m4,m5)
 #lrtest(m4,m6)
-kbl(broom::tidy(m4,exponentiate = TRUE,conf.int = TRUE, conf.type = "Wald")[,], caption = "Summary Table of The Generalized Linear Model", 
+kbl(broom::tidy(m4,conf.int = TRUE, conf.type = "Wald")[,], caption = "Summary Table of The Generalized Linear Model", 
       digits = 3, format = "markdown", align = "ccccc", padding= 3)
 ```
 
@@ -237,7 +237,7 @@ $log(\frac{p}{1-p})={\beta_0} +{\beta_1}MedianIncome+{\beta_2}Age$
 Where $N$ represents the number of Device Users, and $p$ represents the probability of a device user uses Active or Advance given the information on median income and population. 
 
 ```{r, echo = FALSE}
-kbl(broom::tidy(m2,exponentiate = TRUE,conf.int = TRUE, conf.type = "Wald")[,], caption = "Summary Table of The Generalized Linear Model", 
+kbl(broom::tidy(m2,conf.int = TRUE, conf.type = "Wald")[,], caption = "Summary Table of The Generalized Linear Model", 
       digits = 3, format = "markdown", align = "ccccc", padding= 3)
 ```
 
