@@ -248,6 +248,8 @@ The model summary and confidence interval are almost identical to the previously
 
 ## Are Mingar Wearables Racist?
 
+The data used to determine the cause of poor sleep score performance of the devices is based on the previous data used for the first research question. Then we joint the data with customer sleep data provided by Mingar. The data allows us to explore and validate whether having darker skin color actually causes the devices to perform poorly on sleep functionalities.  
+
 
 ```{r 6,fig.cap="Relationship of average Sleep Duration and average Flags per User's Sleep", echo = FALSE,fig.width=8, fig.height=4}
 
@@ -342,11 +344,17 @@ flag_population_byCust %>%
 
 ```
 
+To identify the root cause for Mingar's some device performing poorly on sleep scores, Simplicity decides to use a Poisson generalized linear mixed model. The first reason to select such model is due to the nature of the variable we are to study. Flags is a count variable that records the number of red flags of device malfunction over the period of user's sleep time, thus falls under Poisson distribution. Due to the collection method of the data, the data records large amount of observations of sleep from each users, thus it is appropriate to include customer id as random effect, which makes the model a linear mixed model. From previous data discovery, we learned that flags and sleep duration have a positive linear relation, more flags can potentially appears as sleep last longer. To standardized number of flags within the same period of time, log sleep duration is selected to be the offset of the model.
+Lastly, we want to determine whether skin color and other demographic backgrounds influences the performance of the devices,
+Through multiple nested likelihood ratio tests, testing on background variables median income, age, sex, location, and potential skin colors,
+The most appropriate model is given by:
 Model2 is given by: 
 
 $log(flags)= log(duration)+{\beta_1}emoji\_colorYellow+{\beta_2}emoji\_colorLight+{\beta_3}emoji\_colorMedium Light+ {\beta_4}emoji\_colorMedium+{\beta_5}emoji\_colorMedium Dark+{\beta_6}emoji\_colorDark+ U_i$ 
 
 Where $U_i$ represents random effect for $Customer_i$. Because only dummy variables were used as predictors, the report decides not to use intercept for this model, and there will be no reference level. 
+
+Across all demographic backgrounds, Only potential skin colors are significant to the Poisson regression model.This validates the complaint from customers that devices are performing poorly for users with darker skin, particularly with respect to sleep scores. 
 
 ```{r, echo = FALSE}
 #m1=glm(flags~emoji_color,offset=log(duration),family=poisson,data=sleep_data)
