@@ -88,18 +88,18 @@ within Mingar's wearables.
 
 ## Who are the "Active" and "Advance" Line Wearables Customers?
 
-_For each research question, you will want to briefly describe any data manipulation, show some exploratory plots/summary tables, report on any methods you use (i.e. models you fit) and the conclusions you draw from these_
+The data used for the purpose of this research question is based on the joint data of customer device, customer, and device data provided from the client Mingar. Then we further strengthen the data information by including living areas sorted by postal code, median income of areas, and population of the areas. Based on the existing variables, column age was created using Date of Birth information from the data. Column emoji color was also created based on the variable emoji modifier in the data. Users preferred emoji skin color can be used as an rough indicator of their skin color.
+
+
 ```{r, echo = FALSE}
 dev_data <- read_rds("data/dev_data.Rds")
 sleep_data <- read_rds("data/sleep_data.Rds")
 ```
 
-
 ```{r, echo = FALSE}
 dev_data1 <- dev_data %>% 
   mutate(active_advance_user = if_else(active_advance_user==1, "active or advance user", "others user"))
 ```
-
 
 ```{r 1, echo = FALSE ,fig.cap="Density Distribution of Active or Advance Users vs. Other Device Users by Age", fig.width=8, fig.height=4}
   age_density <- dev_data1 %>% 
@@ -129,6 +129,7 @@ population_density <- dev_data1%>%
 
 population_density
 ```
+
 
 
 ```{r 4,fig.cap="Percent Distribution of Active or Advance Users vs. Other Device Users by Sex", echo = FALSE,message=FALSE,fig.width=8, fig.height=4}
@@ -172,13 +173,16 @@ dev_data1 %>%
   )+coord_flip()
 ```
 
-The Binomial Generalized Linear Model is given by:
+To identify the target audiences for Mingar's new budget line up of devices Active and Advance, Simplicity decides to a binomial generalized linear model. The reason to select such model is due to the nature of the variable we are to study, active advance users. It consists of 1 and 0 where 1 represents user uses active or advance devices, and 0 otherwise. We want to determine the demographic backgrounds of active and advance users by using active advance users as outcome and various demographic background as the predictors. And a generalized linear model is a perfect fit for such task.
+Through multiple nested likelihood ratio tests, testing on background variables like median income, age, sex, location, and potential skin colors,
+The most appropriate model is given by:
 
 $ActiveAdvanceUsers \sim Binomial(N,p)$ 
 
 $log(\frac{p}{1-p})={\beta_0} +{\beta_1}MedianIncome+{\beta_2}Age+{\beta_3}Population$
 
 Where $N$ represents the number of Device Users, and $p$ represents the probability of a device user uses Active or Advance given the information on median income and population. 
+
 
 ```{r, echo = FALSE}
 dev_data=na.omit(dev_data)
@@ -193,15 +197,11 @@ m4 <-glm(active_advance_user~scales::rescale(hhld_median_inc)+scales::rescale(ag
 #lrtest(m2,m4)
 #lrtest(m4,m5)
 #lrtest(m4,m6)
-kbl(broom::tidy(m4)[,], caption = "Summary Table of The Generalized Linear Model", 
+kbl(broom::tidy(m4,exponentiate = TRUE,conf.int = TRUE, conf.type = "Wald")[,], caption = "Summary Table of The Generalized Linear Model", 
       digits = 3, format = "markdown", align = "ccccc", padding= 3)
 ```
 
-```{r, echo = FALSE, message=FALSE}
-## load confidence interval
-dev_Confint <- confint(m4,method="Wald")
-kable(dev_Confint,  caption = "Confidence Interval Table of The Generalized Linear Model", digits = 3, format = "markdown", align = "ccccc", padding= 3)
-```
+
 
 For a generalized linear model to be valid, following assumptions needs to hold.
 
@@ -237,16 +237,11 @@ $log(\frac{p}{1-p})={\beta_0} +{\beta_1}MedianIncome+{\beta_2}Age$
 Where $N$ represents the number of Device Users, and $p$ represents the probability of a device user uses Active or Advance given the information on median income and population. 
 
 ```{r, echo = FALSE}
-kbl(broom::tidy(m2)[,], caption = "Summary Table of The Bionomial Generalized Linear Model", 
+kbl(broom::tidy(m2,exponentiate = TRUE,conf.int = TRUE, conf.type = "Wald")[,], caption = "Summary Table of The Generalized Linear Model", 
       digits = 3, format = "markdown", align = "ccccc", padding= 3)
 ```
 
 
-```{r, echo = FALSE, message=FALSE}
-## load confidence interval
-dev_Confint <- confint(m2,method="Wald")
-kable(dev_Confint,  caption = "Confidence Interval Table of The Binomial Generalized Linear Model", digits = 3, format = "markdown", align = "ccccc", padding= 3)
-```
 
 The model summary and confidence interval are almost identical to the previously proposed model, just without population as one of the model's predictor.
 
@@ -321,6 +316,7 @@ duration_age_byCust %>%
 ```
 
 
+
 ```{r 11, fig.cap="Distribution of average flags per User's Sleep by Sex", echo = FALSE ,fig.width=8, fig.height=4, message=FALSE}
 flag_sex_byCust <- sleep_data %>% 
   mutate(sex = if_else(is.na(sex), "unkown", sex))%>%
@@ -365,30 +361,22 @@ m2=glmer(flags~emoji_color+(1|cust_id),offset=log(duration),family=poisson,data=
 #lrtest(m2,m5)
 #lrtest(m2,m6)
 m2=glmer(flags~emoji_color+(1|cust_id)+0,offset=log(duration),family=poisson,data=sleep_data)
-kbl(broom.mixed::tidy(m2,effects="fixed")[,], caption = "Summary Table of The Poisson Generalized Linear Mixed Model", 
-      digits = 3, format = "markdown", align = "ccccc", padding= 3)
+kbl(broom.mixed::tidy(m2,effects="fixed",exponentiate = TRUE,conf.int = TRUE, conf.type = "Wald")[,], caption = "Summary Table of The Poisson Generalized Linear Mixed Model", digits = 3, format = "markdown", align = "ccccc", padding= 3)
+
 ```
 
 
-```{r, echo = FALSE, message=FALSE}
-## load confidence interval
-dev_Confint <- confint(m2,method="Wald")
-kable(dev_Confint,  caption = "Confidence Interval Table of The Poisson Generalized Linear Mixed Model", digits = 3, format = "markdown", align = "ccccc", padding= 3)
-```
+
 
 For a Poisson generalized linear mixed model to be valid, following assumptions needs to hold.
 
-1. The model's response needs to be under Poisson distribution. 
-
-Flags is a count variable that records the number of red flags over the period of user's sleep time, thus falls under Poisson distribution.
+1. The model's response needs to be under Poisson distribution. Flags is a count variable that records the number of red flags over the period of user's sleep time, thus falls under Poisson distribution.
 
 2. Random effect, which in this case are the customers should be normally distributed.
 
 3. The customer's random effects errors and residual errors within preferred emoji skin should have constant variance.
 
-4. The model assumes a linear relationship between the transformed response with the predictor variables. Which in this case is $log(Flags)$ and $emoji \\color$.
-
-
+4. The model assumes a that the transformed response must have a linear function with predictor variables. Which in this case is $log(Flags)$ and $emoji \\color$.
 
 ## Discussion
 
