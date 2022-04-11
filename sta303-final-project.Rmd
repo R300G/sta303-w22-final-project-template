@@ -291,8 +291,6 @@ kbl(broom::tidy(m2,conf.int = TRUE, conf.type = "Wald")[,], caption = "Summary T
       digits = 3, format = "markdown", align = "ccccc", padding= 3)
 ```
 
-
-
 The model summary and confidence interval are almost identical to the previously proposed model, just without population as one of the model's predictor.
 
 
@@ -394,6 +392,7 @@ flag_population_byCust %>%
 
 ```
 
+### Model Selection
 To identify the root cause for Mingar's some device performing poorly on sleep scores, Simplicity decides to use a Poisson generalized linear mixed model. The first reason to select such model is due to the nature of the variable we are to study. Flags is a count variable that records the number of red flags of device malfunction over the period of user's sleep time, thus falls under Poisson distribution. Due to the collection method of the data, the data records large amount of observations of sleep from each users, thus it is appropriate to include customer id as random effect, which makes the model a linear mixed model. From previous data discovery, we learned that flags and sleep duration have a positive linear relation, more flags can potentially appears as sleep last longer. To standardized number of flags within the same period of time, log sleep duration is selected to be the offset of the model.
 Lastly, we want to determine whether skin color and other demographic backgrounds influences the performance of the devices,
 Through multiple nested likelihood ratio tests, testing on background variables median income, age, sex, location, and potential skin colors,
@@ -424,7 +423,7 @@ kbl(broom.mixed::tidy(m2,effects="fixed",exponentiate = TRUE,conf.int = TRUE, co
 ```
 
 
-
+### Model Assumptions
 
 For a Poisson generalized linear mixed model to be valid, following assumptions needs to hold.
 
