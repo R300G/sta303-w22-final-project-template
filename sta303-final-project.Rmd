@@ -69,7 +69,15 @@ _This part of the report is much more comprehensive than the executive summary. 
 _Provide a brief introduction to your report and outline what the report will cover. This section is valuable for setting scope and expectations. _
 
 ### Research questions
-_Use bullet points to to describe the research questions you are going to address. Write in full sentences._
+Our report aims to address the 2 questions that Mingar has asked of us. More 
+specifically, Question 1 targets primarily who Mingar's new customers of the 
+affordable lines of wearables, "Active" and "Advance" are. We aim to highlight 
+the specific significant factors that do and do not identify such customers.
+
+Question 2 asks to find any device incompetencies found during sleep score flag 
+records due to user skin colour likely stemming from sensor quality issue or 
+other data quality issue to determine whether there is racial bias existing 
+within Mingar's wearables.
 
 ## Informative title for section addressing a research question 1
 
