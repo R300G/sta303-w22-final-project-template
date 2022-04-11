@@ -1,7 +1,7 @@
 ---
 title: "Report title"
 subtitle: "Subtitle that indicates findings"
-author: "Report prepared for MINGAR by [consulting company name]"
+author: "Report prepared for MINGAR by Simplicity"
 date: 2022-04-11
 lang: "en"
 output:
@@ -66,7 +66,20 @@ _This part of the report is much more comprehensive than the executive summary. 
 
 ## Introduction
 
-_Provide a brief introduction to your report and outline what the report will cover. This section is valuable for setting scope and expectations. _
+In this report, Simplicity will tackle Mingar's most pressing questions to date, 
+i.e. who are Mingar's customers of their newer and more cost-efficient wearable 
+lines? And do the currently trending damaging claims of "racist" Mingar 
+wearables hold any weight? Read on to find out.
+
+Our company has gone through the exhaustive work of selecting the 2 best fitting 
+models of the data that best answer each question by considering any predictors
+that may influence our variable of interest, within the realm of common sense 
+and reason backed by statistical tests, handy plots and colourful illustrations. 
+Due to racial and ethnic privacy issues that prevent Mingar from collecting such 
+data, we have rolled up our sleeves, wrangled the data and gotten creative with 
+our approach to solving our client's questions. And in the spirit of 
+transparency, we will explain any limitations that we ran into in the process.
+
 
 ### Research questions
 Our report aims to address the 2 questions that Mingar has asked of us. More 
@@ -79,7 +92,8 @@ records due to user skin color likely stemming from sensor quality issue or
 other data quality issue to determine whether there is racial bias existing 
 within Mingar's wearables.
 
-## Informative title for section addressing a research question 1
+
+## Who are the "Active" and "Advance" Line Wearables Customers?
 
 _For each research question, you will want to briefly describe any data manipulation, show some exploratory plots/summary tables, report on any methods you use (i.e. models you fit) and the conclusions you draw from these_
 ```{r}
@@ -168,7 +182,8 @@ m6 <-glm(active_advance_user~scales::rescale(hhld_median_inc)+scales::rescale(ag
 summary(m4)
 ```
 
-## Informative title for section addressing a research question 2
+
+## Are Mingar Wearables Racist?
 ```{r}
 sleep_data=na.omit(sleep_data)
 m1=glm(flags~emoji_color,offset=log(duration),family=poisson,data=sleep_data)
@@ -220,6 +235,18 @@ with regardless of their own shades. However, we believe, once again, that the
 average consumer will selected a fairly similar emoji modifier to their own skin 
 colour; and that was how we were able to proceed with our analysis and provide 
 some meaningful results.
+
+Not to toot our own horn, but Simplicity prides itself on being expert model 
+selectors, whereby we consider numerous models, six, in fact, per question. 
+Through an open and diverse lens, we consider various predictors when answering 
+both questions of focus to ensure we do not exclude any important factors. Our 
+strong foundational understanding of distributions assisted us in deciding what 
+the underlying distributions of the datasets that we cleverly were able to 
+wrangle, join together and explore for the most meaningful models. Most 
+importantly, our company's strong core beliefs of accountability and integrity
+allows you to be assured that the final model selection was based on results 
+that were authentic and reproducible with various illustrations, plots and tests 
+to showcase the data and results.
 
 \newpage
 # Consultant information
