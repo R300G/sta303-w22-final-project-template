@@ -90,6 +90,15 @@ within Mingar's wearables.
 
 The data used for the purpose of this research question is based on the joint data of customer device, customer, and device data provided from the client Mingar. Then we further strengthen the data information by including living areas sorted by postal code, median income of areas, and population of the areas. Based on the existing variables, column age was created using Date of Birth information from the data. Column emoji color was also created based on the variable emoji modifier in the data. Users preferred emoji skin color can be used as an rough indicator of their skin color.
 
+Let us begin by discussing the process surrounding the model selection for this
+question. We know that we want our response variable to be binomial, where 0 
+represents a user that does not own an active or advance wearable and 1 
+represents a user that does own anactive or advance wearable. Thus the 
+underlying distribution of the generalized linear model(GLM) is binomial. 
+
+
+In the first stages of our analysis, we began by looking at the relationship 
+different variables may have had on our response variable. 
 
 ```{r, echo = FALSE}
 dev_data <- read_rds("data/dev_data.Rds")
