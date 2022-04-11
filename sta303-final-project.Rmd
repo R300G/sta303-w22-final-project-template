@@ -1,7 +1,7 @@
 ---
 title: "Report title"
 subtitle: "Subtitle that indicates findings"
-author: "Report prepared for MINGAR by [consulting company name]"
+author: "Report prepared for MINGAR by Simplicity"
 date: 2022-04-11
 lang: "en"
 output:
