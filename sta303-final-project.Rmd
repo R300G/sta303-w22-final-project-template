@@ -86,16 +86,33 @@ m2<- glm(active_advance_user~scales::rescale(hhld_median_inc)+scales::rescale(ag
 m3<- glm(active_advance_user~scales::rescale(hhld_median_inc)+scales::rescale(age)+sex,  data = dev_data, family = binomial)
 m4 <-glm(active_advance_user~scales::rescale(hhld_median_inc)+scales::rescale(age)+Population,  data = dev_data, family = binomial)
 m5 <-glm(active_advance_user~scales::rescale(hhld_median_inc)+scales::rescale(age)+Population + CSDuid,  data = dev_data, family = binomial)
+m6 <-glm(active_advance_user~scales::rescale(hhld_median_inc)+scales::rescale(age)+Population + emoji_color,  data = dev_data, family = binomial)
 ##kbl(broom::tidy(fit1)[,], caption = "Summary Table of Model1", digits = 3, format = "markdown", align = "ccccc", padding= 3) 
 #lrtest(m1,m2)
 #lrtest(m1,m3)
 #lrtest(m3,m4)
 #lrtest(m4,m5)
+#lrtest(m4,m6)
 summary(m4)
 ```
 
 ## Informative title for section addressing a research question 2
+```{r}
+sleep_data=na.omit(sleep_data)
+m1=glm(flags~emoji_color,offset=log(duration),family=poisson,data=sleep_data)
+m2=glmer(flags~emoji_color+(1|cust_id),offset=log(duration),family=poisson,data=sleep_data)
+m3=glmer(flags~emoji_color+(1|cust_id) + (1|dev_id),offset=log(duration),family=poisson,data=sleep_data)
+m4=glmer(flags~emoji_color+scales::rescale(age)+(1|cust_id),offset=log(duration),family=poisson,data=sleep_data)
+m5=glmer(flags~emoji_color+scales::rescale(age)+ sex +(1|cust_id),offset=log(duration),family=poisson,data=sleep_data)
+m6=glmer(flags~emoji_color+scales::rescale(age) + scales::rescale(Population)+(1|cust_id),offset=log(duration),family=poisson,data=sleep_data)
+#lrtest(m1,m2)
+#lrtest(m2,m3)
+#lrtest(m2,m4)
+#lrtest(m4,m5)
+#lrtest(m4,m6)
 
+summary(m4)
+```
 
 ## Discussion
 
