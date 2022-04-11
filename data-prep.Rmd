@@ -112,7 +112,7 @@ median_income <- census_data_csd %>%
   rename(hhld_median_inc = 2)
 ```
 # data processing
-
+## Research Question 1
 ```{r}
 postcode_median_income <- postcode %>%
   distinct_all() %>%
@@ -135,5 +135,14 @@ cust_dev_data <- customer %>%
 cust_dev_data
 ```
 
+## Research Question 2
+```{r}
+cust_sleep_data <- cust_sleep %>% 
+  left_join(cust_dev_info0)
+cust_sleep_data
+```
+```{r}
+cust_dev_data%>% write_rds("data/dev_data.Rds")
+cust_sleep_data%>% write_rds("data/sleep_data.Rds")
 
-
+```
