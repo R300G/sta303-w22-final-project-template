@@ -66,7 +66,20 @@ _This part of the report is much more comprehensive than the executive summary. 
 
 ## Introduction
 
-_Provide a brief introduction to your report and outline what the report will cover. This section is valuable for setting scope and expectations. _
+In this report, Simplicity will tackle Mingar's most pressing questions to date, 
+i.e. who are Mingar's customers of their newer and more cost-efficient wearable 
+lines? And do the currently trending damaging claims of "racist" Mingar 
+wearables hold any weight? Read on to find out.
+
+Our company has gone through the exhaustive work of selecting the 2 best fitting 
+models of the data that best answer each question by considering any predictors
+that may influence our variable of interest, within the realm of common sense 
+and reason backed by statistical tests, handy plots and colourful illustrations. 
+Due to racial and ethnic privacy issues that prevent Mingar from collecting such 
+data, we have rolled up our sleeves, wrangled the data and gotten creative with 
+our approach to solving our client's questions. And in the spirit of 
+transparency, we will explain any limitations that we ran into in the process.
+
 
 ### Research questions
 Our report aims to address the 2 questions that Mingar has asked of us. More 
@@ -78,6 +91,7 @@ Question 2 asks to find any device incompetencies found during sleep score flag
 records due to user skin colour likely stemming from sensor quality issue or 
 other data quality issue to determine whether there is racial bias existing 
 within Mingar's wearables.
+
 
 ## Who are the "Active" and "Advance" Line Wearables Customers?
 
@@ -103,6 +117,7 @@ m6 <-glm(active_advance_user~scales::rescale(hhld_median_inc)+scales::rescale(ag
 #lrtest(m4,m6)
 summary(m4)
 ```
+
 
 ## Are Mingar Wearables Racist?
 ```{r}
