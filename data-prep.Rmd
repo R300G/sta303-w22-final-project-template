@@ -23,6 +23,7 @@ output:
 ```{r, libraries}
 # Set up any libraries you need
 library(tidyverse)
+library(haven)
 library(rio)
 library(readr)
 library(plotly)
@@ -70,6 +71,18 @@ device_data <- html %>%
 device_data
 ```
 
+## Postal Code data
+```{r}
+
+dataset = read_sav("data-raw/pccfNat_fccpNat_082021sav.sav")
+
+postcode <- dataset %>% 
+  select(PC, CSDuid) %>% 
+  rename(c("postcode" = "PC"))
+postcode %>% head()
+
+
+```
 # Census API
 
 ```{r}
@@ -98,4 +111,29 @@ median_income <- census_data_csd %>%
   mutate(CSDuid = parse_number(CSDuid)) %>% 
   rename(hhld_median_inc = 2)
 ```
+# data processing
+
+```{r}
+postcode_median_income <- postcode %>%
+  distinct_all() %>%
+  left_join(median_income) %>% 
+  arrange(postcode, desc(Population)) %>% 
+  group_by(postcode) %>% 
+  summarise(hhld_median_inc = mean(hhld_median_inc, na.rm = TRUE),
+            Population = sum(Population, na.rm = TRUE),
+            CSDuid = first(CSDuid)) %>% 
+  ungroup()
+postcode_median_income
+
+cust_dev_data <- customer %>% 
+  ungroup() %>% 
+  left_join(cust_dev) %>% 
+  left_join(device) %>% 
+  left_join(rename(device_data, c("device_name" = "Device name", 
+                                  "line" = "Line"))) %>% 
+  left_join(postcode_median_income)
+cust_dev_data
+```
+
+
 
