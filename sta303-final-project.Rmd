@@ -203,8 +203,38 @@ summary(m2)
 
 ## Discussion
 
-_In this section you will summarize your findings across all the research questions and discuss the strengths and limitations of your work. It doesn't have to be long, but keep in mind that often people will just skim the intro and the discussion of a document like this, so make sure it is useful as a semi-standalone section (doesn't have to be completely standalone like the executive summary)._
+After selecting the most appropriate model for each question, we can now answer
+the 2 questions at hand. 
 
+Who Are the "Active" and "Advance" Line Wearables Customers? First, we have to
+answer what the distinct characteristics of the "Active" and "Advance" 
+customers are. Through the final selected generalized linear model, we see the 
+most significant character traits to be income, age and number of residents in
+the same neighbourhood. Furthermore, we see that there is a negative 
+relationship between the active and advance customers binary response variable
+and income, which reasons that wealthier individuals buy less of these 2 
+lines, meanwhile lower income individuals buy more of them. In one of our plots
+above, we see that customers less than 20 and over 60 buy more of the active 
+and advance lines than the others. This suggests that once again adolescents or
+young adults and seniors are more the target audience for these lines. This is 
+congruent to our prior conclusions regarding income, i.e. individuals in those
+age groups are generally regarded as having lower income looking for more 
+affordable products. As for the last characteristic, population within a 
+neighbourhood, conclusions are hard to draw as the relationship is unclear, 
+though notably it is negative.
+
+Are Mingar Wearables "Racist"? In short, yes. Let's talk about it...
+Through our generalized linear mixed model, it was evident that the number of 
+flags, which are quality issues that occur during sleep, related to sensor error 
+or other data quality issues, increased for darker skin tones of overall the 
+emoji modifiers; in exactly the order of Light, Medium Light, Medium, Medium 
+Dark to Dark (least flags to most flags respectively). Moreover, out of the six 
+models we considered, the most suitable model found the emoji modifier predictor 
+to be the only significant one for the flag response variable, leaving us with 
+the belief that the only consequential factor of these flags is the individual's 
+skin tone. Our recommendation is that further tests on the hardware of the 
+wearables should be conducted to determine the exact cause behind the skin tone 
+sensitivity and lack of quality as a result.
 ### Strengths and limitations
 
 Simplicity believes in transparency and as such, we find it important to 
