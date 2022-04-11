@@ -75,7 +75,7 @@ affordable lines of wearables, "Active" and "Advance" are. We aim to highlight
 the specific significant factors that do and do not identify such customers.
 
 Question 2 asks to find any device incompetencies found during sleep score flag 
-records due to user skin colour likely stemming from sensor quality issue or 
+records due to user skin color likely stemming from sensor quality issue or 
 other data quality issue to determine whether there is racial bias existing 
 within Mingar's wearables.
 
@@ -88,6 +88,71 @@ sleep_data <- read_rds("data/sleep_data.Rds")
 ```
 
 ```{r}
+dev_data1 <- dev_data %>% 
+  mutate(active_advance_user = if_else(active_advance_user==1, "active or advance user", "others user"))
+```
+
+```{r}
+  age_density <- dev_data1 %>% 
+  ggplot(aes(x = age, fill = active_advance_user)) + 
+  geom_density(alpha = 0.2)
+
+ggplotly(age_density)
+age_density
+```
+```{r}
+median_inc_density <- dev_data1 %>% 
+  ggplot(aes(x = hhld_median_inc, fill = active_advance_user)) + 
+  geom_density(alpha = 0.2)
+
+ggplotly(median_inc_density)
+median_inc_density
+```
+```{r}
+population_density <- dev_data1%>% 
+  ggplot(aes(x = Population, fill = active_advance_user)) + 
+  geom_density(alpha = 0.2)
+
+ggplotly(population_density)
+population_density
+```
+
+```{r}
+dev_data1 %>% 
+  mutate(sex = if_else(is.na(sex), "unkown", sex)) %>% 
+  group_by(active_advance_user, sex) %>% 
+  summarise(N = n_distinct(cust_id)) %>% 
+  ungroup() %>% 
+  group_by(active_advance_user) %>% 
+  mutate(total = sum(N)) %>% 
+  ungroup() %>% 
+  mutate(percent_label = N / total) %>% 
+  ggplot(aes(x = active_advance_user, y = N, fill = sex)) + 
+  geom_bar(stat = "identity") + 
+  geom_text(aes(label = if_else(sex %in% c("Male", "Female"),paste(round(percent_label, 2) * 100, "%"),"")),
+    position = position_stack(vjust = 0.5),
+    color = "white",
+    fontface = "bold"
+  )+coord_flip()
+```
+```{r}
+dev_data1 %>% 
+  group_by(active_advance_user, emoji_color) %>% 
+  summarise(N = n_distinct(cust_id)) %>% 
+  ungroup() %>% 
+  group_by(active_advance_user) %>% 
+  mutate(total = sum(N)) %>% 
+  ungroup() %>% 
+  mutate(percent_label = N / total) %>% 
+  ggplot(aes(x = active_advance_user, y = N, fill = emoji_color)) + 
+  geom_bar(stat = "identity") + 
+  geom_text(aes(label = paste(round(percent_label, 2) * 100, "%")),
+    position = position_stack(vjust = 0.5),
+    color = "white",
+    fontface = "bold"
+  )+coord_flip()
+```
+```{r}
 dev_data=na.omit(dev_data)
 m1<- glm(active_advance_user~scales::rescale(hhld_median_inc),  data = dev_data, family = binomial)
 m2<- glm(active_advance_user~scales::rescale(hhld_median_inc)+scales::rescale(age),  data = dev_data, family = binomial)
@@ -95,7 +160,6 @@ m3<- glm(active_advance_user~scales::rescale(hhld_median_inc)+scales::rescale(ag
 m4 <-glm(active_advance_user~scales::rescale(hhld_median_inc)+scales::rescale(age)+Population,  data = dev_data, family = binomial)
 m5 <-glm(active_advance_user~scales::rescale(hhld_median_inc)+scales::rescale(age)+Population + CSDuid,  data = dev_data, family = binomial)
 m6 <-glm(active_advance_user~scales::rescale(hhld_median_inc)+scales::rescale(age)+Population + emoji_color,  data = dev_data, family = binomial)
-##kbl(broom::tidy(fit1)[,], caption = "Summary Table of Model1", digits = 3, format = "markdown", align = "ccccc", padding= 3) 
 #lrtest(m1,m2)
 #lrtest(m1,m3)
 #lrtest(m3,m4)
@@ -118,8 +182,8 @@ m6=glmer(flags~emoji_color+scales::rescale(age) + scales::rescale(Population)+(1
 #lrtest(m2,m4)
 #lrtest(m4,m5)
 #lrtest(m4,m6)
-
-summary(m4)
+m2=glmer(flags~emoji_color+(1|cust_id)+0,offset=log(duration),family=poisson,data=sleep_data)
+summary(m2)
 ```
 
 ## Discussion
