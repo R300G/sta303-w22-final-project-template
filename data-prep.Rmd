@@ -138,11 +138,10 @@ cust_dev_data
 ## Research Question 2
 ```{r}
 cust_sleep_data <- cust_sleep %>% 
-  left_join(cust_dev_info0)
+  left_join(cust_dev_data)
 cust_sleep_data
 ```
 ```{r}
 cust_dev_data%>% write_rds("data/dev_data.Rds")
 cust_sleep_data%>% write_rds("data/sleep_data.Rds")
-
 ```
