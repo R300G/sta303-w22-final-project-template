@@ -22,7 +22,9 @@ library(lme4)
 library(rvest)
 library(polite)
 library(lmtest)
-library()
+library(kableExtra)
+library(broom)
+theme_set(theme_classic())
 
 # this should suppress all code and messages
 knitr::opts_chunk$set(include=FALSE)
@@ -69,23 +71,30 @@ _Provide a brief introduction to your report and outline what the report will co
 ### Research questions
 _Use bullet points to to describe the research questions you are going to address. Write in full sentences._
 
-## Informative title for section addressing a research question
+## Informative title for section addressing a research question 1
 
 _For each research question, you will want to briefly describe any data manipulation, show some exploratory plots/summary tables, report on any methods you use (i.e. models you fit) and the conclusions you draw from these_
-
 ```{r}
-# This chunk provides an example of some things you can do with RMarkdown 
-
-# read in the data (this will only work once you've set up the data!)
-device_data <- read_csv("data-raw/device.Rds")
-
-# create a visualization
-device_data %>% 
-  ggplot(aes(x = ))
-
+dev_data <- read_rds("data/dev_data.Rds")
+sleep_data <- read_rds("data/sleep_data.Rds")
 ```
 
-## Informative title for section addressing a research question
+```{r}
+dev_data=na.omit(dev_data)
+m1<- glm(active_advance_user~scales::rescale(hhld_median_inc),  data = dev_data, family = binomial)
+m2<- glm(active_advance_user~scales::rescale(hhld_median_inc)+scales::rescale(age),  data = dev_data, family = binomial)
+m3<- glm(active_advance_user~scales::rescale(hhld_median_inc)+scales::rescale(age)+sex,  data = dev_data, family = binomial)
+m4 <-glm(active_advance_user~scales::rescale(hhld_median_inc)+scales::rescale(age)+Population,  data = dev_data, family = binomial)
+m5 <-glm(active_advance_user~scales::rescale(hhld_median_inc)+scales::rescale(age)+Population + CSDuid,  data = dev_data, family = binomial)
+##kbl(broom::tidy(fit1)[,], caption = "Summary Table of Model1", digits = 3, format = "markdown", align = "ccccc", padding= 3) 
+#lrtest(m1,m2)
+#lrtest(m1,m3)
+#lrtest(m3,m4)
+#lrtest(m4,m5)
+summary(m4)
+```
+
+## Informative title for section addressing a research question 2
 
 
 ## Discussion
