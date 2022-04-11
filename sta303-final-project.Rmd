@@ -79,7 +79,7 @@ records due to user skin colour likely stemming from sensor quality issue or
 other data quality issue to determine whether there is racial bias existing 
 within Mingar's wearables.
 
-## Informative title for section addressing a research question 1
+## Who are the "Active" and "Advance" Line Wearables Customers?
 
 _For each research question, you will want to briefly describe any data manipulation, show some exploratory plots/summary tables, report on any methods you use (i.e. models you fit) and the conclusions you draw from these_
 ```{r}
@@ -104,7 +104,7 @@ m6 <-glm(active_advance_user~scales::rescale(hhld_median_inc)+scales::rescale(ag
 summary(m4)
 ```
 
-## Informative title for section addressing a research question 2
+## Are Mingar Wearables Racist?
 ```{r}
 sleep_data=na.omit(sleep_data)
 m1=glm(flags~emoji_color,offset=log(duration),family=poisson,data=sleep_data)
