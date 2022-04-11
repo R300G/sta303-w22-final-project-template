@@ -1,6 +1,6 @@
 ---
-title: "Report title"
-subtitle: "Subtitle that indicates findings"
+title: "New and Affordable 'Active' and 'Advance' Mingar Wearable Lines Turning Heads... Maybe Not All the Ones They Wanted"
+subtitle: "Who are these new customers? And do these racist complaints hold merit?"
 author: "Report prepared for MINGAR by Simplicity"
 date: 2022-04-11
 lang: "en"
