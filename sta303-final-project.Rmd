@@ -27,7 +27,7 @@ library(broom)
 theme_set(theme_classic())
 
 # this should suppress all code and messages
-knitr::opts_chunk$set(include=FALSE)
+#knitr::opts_chunk$set(include=FALSE)
 ```
 
 # General comments (you can delete this section)
@@ -96,42 +96,39 @@ within Mingar's wearables.
 ## Who are the "Active" and "Advance" Line Wearables Customers?
 
 _For each research question, you will want to briefly describe any data manipulation, show some exploratory plots/summary tables, report on any methods you use (i.e. models you fit) and the conclusions you draw from these_
-```{r}
+```{r, echo = FALSE}
 dev_data <- read_rds("data/dev_data.Rds")
 sleep_data <- read_rds("data/sleep_data.Rds")
 ```
 
-```{r}
+```{r, echo = FALSE}
 dev_data1 <- dev_data %>% 
   mutate(active_advance_user = if_else(active_advance_user==1, "active or advance user", "others user"))
 ```
 
-```{r}
+```{r, echo = FALSE ,fig.width=8, fig.height=4}
   age_density <- dev_data1 %>% 
   ggplot(aes(x = age, fill = active_advance_user)) + 
   geom_density(alpha = 0.2)
 
-ggplotly(age_density)
 age_density
 ```
-```{r}
+```{r, echo = FALSE,fig.width=8, fig.height=4}
 median_inc_density <- dev_data1 %>% 
   ggplot(aes(x = hhld_median_inc, fill = active_advance_user)) + 
   geom_density(alpha = 0.2)
 
-ggplotly(median_inc_density)
 median_inc_density
 ```
-```{r}
+```{r, echo = FALSE,fig.width=8, fig.height=4}
 population_density <- dev_data1%>% 
   ggplot(aes(x = Population, fill = active_advance_user)) + 
   geom_density(alpha = 0.2)
 
-ggplotly(population_density)
 population_density
 ```
 
-```{r}
+```{r, echo = FALSE,fig.width=8, fig.height=4}
 dev_data1 %>% 
   mutate(sex = if_else(is.na(sex), "unkown", sex)) %>% 
   group_by(active_advance_user, sex) %>% 
@@ -149,7 +146,7 @@ dev_data1 %>%
     fontface = "bold"
   )+coord_flip()
 ```
-```{r}
+```{r, echo = FALSE,fig.width=8, fig.height=4}
 dev_data1 %>% 
   group_by(active_advance_user, emoji_color) %>% 
   summarise(N = n_distinct(cust_id)) %>% 
@@ -166,14 +163,14 @@ dev_data1 %>%
     fontface = "bold"
   )+coord_flip()
 ```
-```{r}
+```{r, echo = FALSE}
 dev_data=na.omit(dev_data)
-m1<- glm(active_advance_user~scales::rescale(hhld_median_inc),  data = dev_data, family = binomial)
-m2<- glm(active_advance_user~scales::rescale(hhld_median_inc)+scales::rescale(age),  data = dev_data, family = binomial)
-m3<- glm(active_advance_user~scales::rescale(hhld_median_inc)+scales::rescale(age)+sex,  data = dev_data, family = binomial)
+#m1<- glm(active_advance_user~scales::rescale(hhld_median_inc),  data = dev_data, family = binomial)
+#m2<- glm(active_advance_user~scales::rescale(hhld_median_inc)+scales::rescale(age),  data = dev_data, family = binomial)
+#m3<- glm(active_advance_user~scales::rescale(hhld_median_inc)+scales::rescale(age)+sex,  data = dev_data, family = binomial)
 m4 <-glm(active_advance_user~scales::rescale(hhld_median_inc)+scales::rescale(age)+Population,  data = dev_data, family = binomial)
-m5 <-glm(active_advance_user~scales::rescale(hhld_median_inc)+scales::rescale(age)+Population + CSDuid,  data = dev_data, family = binomial)
-m6 <-glm(active_advance_user~scales::rescale(hhld_median_inc)+scales::rescale(age)+Population + emoji_color,  data = dev_data, family = binomial)
+#m5 <-glm(active_advance_user~scales::rescale(hhld_median_inc)+scales::rescale(age)+Population + CSDuid,  data = dev_data, family = binomial)
+#m6 <-glm(active_advance_user~scales::rescale(hhld_median_inc)+scales::rescale(age)+Population + emoji_color,  data = dev_data, family = binomial)
 #lrtest(m1,m2)
 #lrtest(m1,m3)
 #lrtest(m3,m4)
@@ -184,19 +181,114 @@ summary(m4)
 
 
 ## Are Mingar Wearables Racist?
-```{r}
+
+```{r,echo = FALSE,fig.width=8, fig.height=4}
+
+duration_flag_byCust <- sleep_data %>% 
+  group_by(cust_id) %>% 
+  summarise(flags_mean = mean(flags, na.rm = T),
+            duration_mean = mean(duration, na.rm = T)) %>% ungroup() 
+
+duration_flag_byCust %>% 
+  ggplot(aes(x = flags_mean, duration_mean)) + 
+  geom_point()
+  
+```
+```{r, echo = FALSE ,fig.width=8, fig.height=4}
+duration_color_byCust <- sleep_data %>% 
+  group_by(cust_id) %>% 
+  summarise(duration_mean = mean(duration, na.rm = T),emoji_color) %>% ungroup() 
+
+duration_color_byCust %>% 
+  ggplot(aes(x = emoji_color, duration_mean)) + 
+  geom_boxplot(fill = "steel blue")
+```
+```{r, echo = FALSE ,fig.width=8, fig.height=4}
+flag_color_byCust <- sleep_data %>% 
+  group_by(cust_id) %>% 
+  summarise(flag_mean = mean(flags, na.rm = T),emoji_color) %>% ungroup() 
+
+flag_color_byCust %>% 
+  ggplot(aes(x = emoji_color, flag_mean)) + 
+  geom_boxplot(fill = "steel blue")
+```
+```{r, echo = FALSE ,fig.width=8, fig.height=4}
+duration_age_byCust <- sleep_data %>% 
+  group_by(cust_id) %>% 
+  summarise(age_mean = mean(age, na.rm = T),
+            duration_mean = mean(duration, na.rm = T)) %>% ungroup() 
+
+duration_age_byCust %>% 
+  ggplot(aes(x = age_mean, duration_mean)) + 
+  geom_point()
+
+```
+```{r, echo = FALSE ,fig.width=8, fig.height=4}
+duration_age_byCust <- sleep_data %>% 
+  group_by(cust_id) %>% 
+  summarise(age_mean = mean(age, na.rm = T),
+            flag_mean = mean(flags, na.rm = T)) %>% ungroup() 
+
+duration_age_byCust %>% 
+  ggplot(aes(x = age_mean, flag_mean)) + 
+  geom_point()
+
+```
+```{r, echo = FALSE ,fig.width=8, fig.height=4}
+duration_sex_byCust <- sleep_data %>% 
+  mutate(sex = if_else(is.na(sex), "unkown", sex))%>%
+  group_by(cust_id) %>% 
+  summarise(duration_mean = mean(duration, na.rm = T),sex) %>% ungroup() 
+
+duration_sex_byCust %>% 
+  ggplot(aes(x = sex, duration_mean)) + 
+  geom_boxplot(fill = "steel blue")
+```
+```{r, echo = FALSE ,fig.width=8, fig.height=4}
+flag_sex_byCust <- sleep_data %>% 
+  mutate(sex = if_else(is.na(sex), "unkown", sex))%>%
+  group_by(cust_id) %>% 
+  summarise(flag_mean = mean(flags, na.rm = T),sex) %>% ungroup() 
+
+flag_sex_byCust %>% 
+  ggplot(aes(x = sex, flag_mean)) + 
+  geom_boxplot(fill = "steel blue")
+```
+```{r, echo = FALSE ,fig.width=8, fig.height=4}
+duration_population_byCust <- sleep_data %>% 
+  group_by(cust_id) %>% 
+  summarise(duration_mean = mean(duration, na.rm = T), Population) %>% ungroup() 
+
+duration_population_byCust %>% 
+  ggplot(aes(x = Population, duration_mean)) +
+  geom_point()+ geom_jitter()
+
+```
+
+```{r, echo = FALSE ,fig.width=8, fig.height=4}
+flag_population_byCust <- sleep_data %>% 
+  group_by(postcode) %>% 
+  summarise(flag_mean = mean(flags, na.rm = T), Population) %>% ungroup() 
+
+flag_population_byCust %>% 
+  ggplot(aes(x = Population, flag_mean)) +
+  geom_point()+ geom_jitter()
+
+```
+
+```{r, echo = FALSE}
 sleep_data=na.omit(sleep_data)
-m1=glm(flags~emoji_color,offset=log(duration),family=poisson,data=sleep_data)
+#m1=glm(flags~emoji_color,offset=log(duration),family=poisson,data=sleep_data)
 m2=glmer(flags~emoji_color+(1|cust_id),offset=log(duration),family=poisson,data=sleep_data)
-m3=glmer(flags~emoji_color+(1|cust_id) + (1|dev_id),offset=log(duration),family=poisson,data=sleep_data)
-m4=glmer(flags~emoji_color+scales::rescale(age)+(1|cust_id),offset=log(duration),family=poisson,data=sleep_data)
-m5=glmer(flags~emoji_color+scales::rescale(age)+ sex +(1|cust_id),offset=log(duration),family=poisson,data=sleep_data)
-m6=glmer(flags~emoji_color+scales::rescale(age) + scales::rescale(Population)+(1|cust_id),offset=log(duration),family=poisson,data=sleep_data)
+#m3=glmer(flags~emoji_color+(1|cust_id) + (1|dev_id),offset=log(duration),family=poisson,data=sleep_data)
+#m4=glmer(flags~emoji_color+scales::rescale(age)+(1|cust_id),offset=log(duration),family=poisson,data=sleep_data)
+#m5=glmer(flags~emoji_color+scales::rescale(age)+ sex +(1|cust_id),offset=log(duration),family=poisson,data=sleep_data)
+#m6=glmer(flags~emoji_color+scales::rescale(age) + scales::rescale(Population)+(1|cust_id),offset=log(duration),family=poisson,data=sleep_data)
 #lrtest(m1,m2)
 #lrtest(m2,m3)
 #lrtest(m2,m4)
-#lrtest(m4,m5)
-#lrtest(m4,m6)
+#lrtest(m2,m5)
+#lrtest(m2,m6)
 m2=glmer(flags~emoji_color+(1|cust_id)+0,offset=log(duration),family=poisson,data=sleep_data)
 summary(m2)
 ```
