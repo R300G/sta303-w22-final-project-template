@@ -31,26 +31,34 @@ theme_set(theme_classic())
 #knitr::opts_chunk$set(include=FALSE)
 ```
 
-_The cover page must be a single stand alone page and have:_
-
-*	_A title and subtitle (that indicate your findings)_
-* _"Report prepared for MINGAR by" your company name_
-*	_Date (assessment submission date is fine)_
-
-
 \newpage
 # Executive summary
 
-_Guidelines for the executive summary:_
+Our consultants at Simplicity, a company that makes consulting simple for its 
+clients, will be tackling Mingar's most pressing questions today regarding their 
+high-end fitness wearing tracking wearable devices. More specifically, we will 
+be exploring their newest and most affordable lines of wearables, "Active" and 
+"Advance", to uncover who their current audience is and what they find so 
+attractive about these products.
 
-* _No more than two pages_
-* _Language is appropriate for a non-technical audience_
-* _Bullet points are used where appropriate_
-*	_A small number of key visualizations and/or tables are included_
-*	_All research questions are addressed_
+Turns out, it is most likely the affordability. Customers of the new "Active"
+and "Advance" lines are between the ages of 60 or older and 30 or younger.
+One thing these age groups have are thier lower income levels. On average,
+incomes peak for individuals between 30 to 60. Moreover, household median 
+income of the customer by neighbourhood also agrees with the finding that lower
+income earners prefer "Active" and "Advance" lines, while high income earners 
+prefer others. 
 
+Secondly, there has been a trend of complaints that Mingar wearables are 
+"racist", as they were reported to perform poorly for darker complexions 
+compared to thier lighter counter parts. Our findings agreed with those 
+complaints. On the spectrum of skin tones, we found that the number of quality 
+flag raised during sleep increased as the complexion deepened. This may be due
+to some data recording quality issue or sensor incompetencies.
 
-_The [module 4 writing prompt](https://sta303-bolton.github.io/sta303-w22-courseguide/knowledge-basket-writing-and-peer-feedback.html#module-4-writing-task) provides some tips and information about writing executive summaries._
+This report will utilize our strengths to uncover clever manipulations and 
+wrangling of the data to best answer these questions with the limited 
+information available.
 
 
 \newpage
