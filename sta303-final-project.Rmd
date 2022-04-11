@@ -137,7 +137,7 @@ Another limitation we encountered was discovered when tackling your second set
 of questions regarding the racial complaints against Mingar's devices. Since, as 
 mentioned, Mingar does not collect any data on the racial ethnicity of its 
 users, we had to get creative with identifying darker complexion customers from 
-lighter ones. We utilized the emoji_modifier field populated by the customer. We 
+lighter ones. We utilized the emoji modifier field populated by the customer. We 
 must warn that some users have no data within the emoji_modifier field (labeled 
 as NA) as they have presumably not selected one, so we had to work within a 
 subset of the customer data. Moreover, it is not exactly accurate to suggest 
