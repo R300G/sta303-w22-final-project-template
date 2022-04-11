@@ -118,6 +118,10 @@ dev_data1 <- dev_data %>%
 
 age_density
 ```
+The density distribution figure above illustrates that users less than 30 and 
+older than 60 own more active or advance line wearables than users of the same 
+age group for other lines. This leads us to wonder whether age is a valid model 
+predictor.
 
 
 ```{r 2,fig.cap="Density Distribution of Active or Advance Users vs. Other Device Users by Median Income", echo = FALSE,fig.width=8, fig.height=4}
@@ -128,6 +132,13 @@ median_inc_density <- dev_data1 %>%
 
 median_inc_density
 ```
+The next density distribution showcases the relationship between household 
+median income for active or advance line users versus other.The figure above
+shows that customers with a household median income of approximately $70,000 or 
+less own more of the active or advance line wearables than otherwise. 
+
+Once again suggesting that a potential product for determining active or advance
+customers from others is household median income.
 
 
 ```{r 3,fig.cap="Density Distribution of Active or Advance Users vs. Other Device Users by Post Code Population", echo = FALSE,fig.width=8, fig.height=4}
@@ -138,7 +149,11 @@ population_density <- dev_data1%>%
 
 population_density
 ```
-
+Afterwards, we observe our third density distribution figure for this question,
+this time modeling the population variable, which represents the population of
+wearables users within a postal code/neighbourhood, against our response 
+variable. However, no discernible pattern or findings can be drawn from its 
+odd shape.
 
 
 ```{r 4,fig.cap="Percent Distribution of Active or Advance Users vs. Other Device Users by Sex", echo = FALSE,message=FALSE,fig.width=8, fig.height=4}
@@ -160,6 +175,11 @@ dev_data1 %>%
     fontface = "bold"
   )+coord_flip()
 ```
+My partner and I were interested in whether the sex of a user differed based on
+the different lines of wearables. As you can see, the percentage of female,
+male, intersex and unknown barely altered when coming active or advance users
+against all others. We hypothesis at this point that sex will not be a
+predictor for our model.
 
 
 ```{r 5,fig.cap="Density Distribution of Active or Advance Users vs. Other Device Users by Prefered Emoji Skin Tone", echo = FALSE,message=FALSE,fig.width=8, fig.height=4}
@@ -181,6 +201,12 @@ dev_data1 %>%
     fontface = "bold"
   )+coord_flip()
 ```
+We display another graph resembling the one above except this one compares 
+emoji skin tone against lines of wearables. Similarly, no difference between
+active or advance users and other line wearable users in their percentage 
+distribution
+
+### Model Selection
 
 To identify the target audiences for Mingar's new budget line up of devices Active and Advance, Simplicity decides to a binomial generalized linear model. The reason to select such model is due to the nature of the variable we are to study, active advance users. It consists of 1 and 0 where 1 represents user uses active or advance devices, and 0 otherwise. We want to determine the demographic backgrounds of active and advance users by using active advance users as outcome and various demographic background as the predictors. And a generalized linear model is a perfect fit for such task.
 Through multiple nested likelihood ratio tests, testing on background variables like median income, age, sex, location, and potential skin colors,
@@ -209,8 +235,23 @@ m4 <-glm(active_advance_user~scales::rescale(hhld_median_inc)+scales::rescale(ag
 kbl(broom::tidy(m4,conf.int = TRUE, conf.type = "Wald")[,], caption = "Summary Table of The Generalized Linear Model", 
       digits = 3, format = "markdown", align = "ccccc", padding= 3)
 ```
+After conducting likelihood ratio tests, we found that the best suitable 
+model for our binary response variable selected household median income, age 
+and population as significant predictors, not surprisingly. Furthermore, we see
+that there is a negative relationship between income and our active and advance
+line users, which leads me to interpret that lower income earners prefer the
+active and advance wearable lines, while higher income earners prefer other
+wearables. Further to our findings from above regarding age, we do see that it
+does play a significant role in characterizing our active and advance line 
+customers. The significance of the population variable leaves lots of rooms for 
+questions as it is unclear as to how or why the number of people in a 
+neighbourhood would play a role in determining a consumer's choice of active or
+advance line of wearables versus others. One theory I will pose is that perhaps
+the more individuals there are in a neighbourhood, the more likely those 
+occupants will follow trends and purchase more afforable wearables.
 
 
+### Model Assumptions
 
 For a generalized linear model to be valid, following assumptions needs to hold.
 
