@@ -94,6 +94,35 @@ _In this section you will summarize your findings across all the research questi
 
 ### Strengths and limitations
 
+Simplicity believes in transparency and as such, we find it important to 
+disclose the limitations of our research and findings in order for our clients 
+to feel confident with what they are receiving. Since we do not have information 
+on individual income, we had to improvise. We cleverly pulled income information 
+based on postal code from the postal code conversion file (2016 census 
+geography, August 2021 postal codes) provided to us as University of Toronto 
+students. Thus, we only have a general sense of the wealth of a customer based 
+on the neighbourhood they live in. It may not be exactly accurate per consumer 
+considering that high income individuals may reside in low income neighbourhoods 
+and the opposite is true too; however we believe that our analysis provides 
+insights as to the average buying behaviours of your wearables customers, 
+important when answering you first set of questions.
+
+Another limitation we encountered was discovered when tackling your second set 
+of questions regarding the racial complaints against Mingar's devices. Since, as 
+mentioned, Mingar does not collect any data on the racial ethnicity of its 
+users, we had to get creative with identifying darker complexion customers from 
+lighter ones. We utilized the emoji_modifier field populated by the customer. We 
+must warn that some users have no data within the emoji_modifier field (labeled 
+as NA) as they have presumably not selected one, so we had to work within a 
+subset of the customer data. Moreover, it is not exactly accurate to suggest 
+that all customers use the same skin tone emoji modifier as their own, because 
+people have complex skin tones and may find it difficult to select the right 
+shade. Or they may simply slect the emoji that they wish to express themselves 
+with regardless of their own shades. However, we believe, once again, that the 
+average consumer will selected a fairly similar emoji modifier to their own skin 
+colour; and that was how we were able to proceed with our analysis and provide 
+some meaningful results.
+
 \newpage
 # Consultant information
 ## Consultant profiles
