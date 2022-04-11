@@ -393,11 +393,13 @@ flag_population_byCust %>%
 ```
 
 ### Model Selection
-To identify the root cause for Mingar's some device performing poorly on sleep scores, Simplicity decides to use a Poisson generalized linear mixed model. The first reason to select such model is due to the nature of the variable we are to study. Flags is a count variable that records the number of red flags of device malfunction over the period of user's sleep time, thus falls under Poisson distribution. Due to the collection method of the data, the data records large amount of observations of sleep from each users, thus it is appropriate to include customer id as random effect, which makes the model a linear mixed model. From previous data discovery, we learned that flags and sleep duration have a positive linear relation, more flags can potentially appears as sleep last longer. To standardized number of flags within the same period of time, log sleep duration is selected to be the offset of the model.
+To identify the root cause for Mingar's some device performing poorly on sleep scores, Simplicity decides to use a Poisson generalized linear mixed model. The first reason to select such a model is due to the nature of the variable we are studying. Flags is a count variable that records the number of red flags of device malfunction over the period of a user's sleep, thus falls under Poisson distribution. Due to the collection method of the data, the data records large amount of observations of sleep from each users, therefore it is appropriate to include customer id as random effect, which makes the model a linear mixed model. From previous data discovery, we learned that flags and sleep duration have a positive linear relation, more flags can potentially appear as sleep lasts longer. To standardized number of flags within the same period of time, log sleep duration is selected to be the offset of the model.
+
 Lastly, we want to determine whether skin color and other demographic backgrounds influences the performance of the devices,
-Through multiple nested likelihood ratio tests, testing on background variables median income, age, sex, location, and potential skin colors,
+
+Through multiple nested likelihood ratio tests, testing on background variables median income, age, sex, location, and potential skin colors.
+
 The most appropriate model is given by:
-Model2 is given by: 
 
 $log(flags)= log(duration)+{\beta_1}emoji\_colorYellow+{\beta_2}emoji\_colorLight+{\beta_3}emoji\_colorMedium Light+ {\beta_4}emoji\_colorMedium+{\beta_5}emoji\_colorMedium Dark+{\beta_6}emoji\_colorDark+ U_i$ 
 
@@ -515,8 +517,6 @@ to showcase the data and results.
 \newpage
 # Consultant information
 ## Consultant profiles
-
-*Complete this section with a brief bio for each member of your group. If you are completing the project individually, you only need to complete one for yourself. In that case, change the title of this section to 'Consultant profile' instead. Examples below. This section is only marked for completeness, clarity and professionalism, not 'truth' so you can write it as if we're a few years in the future. Put your current degree in as completed and/or add your first choice grad school program, whatever you like. What skills related skills would you most like to highlight? What job title do you want?*
 
 **Aaisha Eid**. Aaisha is a senior consultant at Google. She specializes in reproducible analysis and statistical communication. Aaisha earned her Bachelor of Science, Specialist in Statistics Machine Learning and Data Mining, from the University of Toronto in 2022.
 
