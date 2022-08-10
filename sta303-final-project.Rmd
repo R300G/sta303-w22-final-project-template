@@ -96,7 +96,7 @@ within Mingar's wearables.
 
 ## Who are the "Active" and "Advance" Line Wearables Customers?
 
-The data used for the purpose of this research question is based on the joint data of customer device, customer, and device data provided from the client Mingar. Then we further strengthen the data information by including living areas sorted by postal code, median income of areas, and population of the areas. Based on the existing variables, column age was created using Date of Birth information from the data. Column emoji color was also created based on the variable emoji modifier in the data. Users preferred emoji skin color can be used as an rough indicator of their skin color.
+The data used for the purpose of this research question is based on the joint data of customer device, customer, and device data provided from the client Mingar. Then we further strengthen the data information by including living areas sorted by postal code, median income of areas, and population of the areas. Based on the existing variables, column age was created using Date of Birth information from the data. Column emoji color was also created based on the variable emoji modifier in the data. Users preferred emoji skin color can be used as an rough indicator of their skin color, if user uses no emoji modifier, the variable emoji color will default to yellow. However, yellow has zero indications on a user's potential skin color as default emoji face color without any alteration is yellow. Yellow can be treated as unkown potential skin color.
 
 Let us begin by discussing the process surrounding the model selection for this
 question. We know that we want our response variable to be binomial, where 0 
@@ -306,6 +306,7 @@ The model summary and confidence interval are almost identical to the previously
 
 The data used to determine the cause of poor sleep score performance of the devices is based on the previous data used for the first research question. Then we joint the data with customer sleep data provided by Mingar. The data allows us to explore and validate whether having darker skin color actually causes the devices to perform poorly on sleep functionalities.  
 
+The showcase of poor sleep performance of the wearable can be indicated by two variables, user's sleep duration, and the number of malfunction red flags that device records over user's sleep session. Thus, one of the variable will become the output of this study's model.
 
 ```{r 6,fig.cap="Relationship of average Sleep Duration and average Flags per User's Sleep", echo = FALSE,fig.width=8, fig.height=4}
 
@@ -321,6 +322,9 @@ duration_flag_byCust %>%
 
 ```
 
+Figure 1 illustrates a positive linear relationships between average sleep duration and average red flags per user's sleep. This can be easily interpreted as when sleep duration last longer, wearable devices have more opportunity to malfunction and flags.  
+
+Now we wish to compare both sleep duration and flags to demographic backgrounds in order to determine further information for the construction of te model.
 
 ```{r 7,fig.cap="Distribution of average Sleep Duration per User by preferred Emoji Skin Tone", echo = FALSE ,fig.width=8, fig.height=4, message=FALSE}
 duration_color_byCust <- sleep_data %>% 
@@ -332,7 +336,7 @@ duration_color_byCust %>%
   geom_boxplot(fill = "steel blue")+
   labs(x = "Emoji Skin Tone", y = "average Sleep Duration")
 ```
-
+Figure 2 showcases a negative relation between sleep duration and darker skin color. As user's potential skin color gets darker, the sleep duration is expected to drop as well, resulting lower sleep qualities that's possibly due to malfunctions of the wearable. 
 
 ```{r 8, echo = FALSE ,fig.cap="Distribution of average Flags per User's sleep by preferred Emoji Skin Tone", fig.width=8, fig.height=4, message=FALSE}
 flag_color_byCust <- sleep_data %>% 
@@ -345,6 +349,7 @@ flag_color_byCust %>%
   labs(x = "Emoji Skin Tone", y = "average Flags")
 ```
 
+Figure 3 displayed an extremely positive trend of average flags with darker skin color. Reading from this chart, potential skin color is almost certainly a very significant predictor for the determining the average flags per user's sleep, as the number of flags gets higher for every darker change of skin tone.
 
 ```{r 9, echo = FALSE ,fig.cap="Relationship of average Sleep Duration and Age per User", fig.width=8, fig.height=4}
 duration_age_byCust <- sleep_data %>% 
@@ -358,6 +363,7 @@ duration_age_byCust %>%
   labs(x = "Age", y = "average Sleep Duration")
 
 ```
+Figure 4 showcased a negative linear relationship between sleep durations and age. Although it is possible that age is a influential variable on Mingar wearable's underperformance on sleep score. It is also very reasonble to interpret the trend as user tends to have lower sleep quality and less sleep time when they get older, due to health and many other reasons.
 
 
 ```{r 10, echo = FALSE, fig.cap="Relationship of average Flags and Age per User's sleep", fig.width=8, fig.height=4, message=FALSE}
@@ -373,7 +379,9 @@ duration_age_byCust %>%
 
 ```
 
+Unlike figure 4, figure 5 actually almost shows no linear trends btween average number of flags and age. The distribution of the points are rather flat, indicating age actually have no influence on the number of malfunctions and poor performances of the devices. Thus, it is unlikely that the negative trend displayed in figure 4 is caused by wearable's underperformance on older users. This indicates flags is a better output for the model than sleep duration, as number of flags indicated the number errors caused by the machine, while sleep duration includes broader interpretations where a clear trend could possibily caused by other reason than device's fault. 
 
+Moving on, the report will only explore the relationship flags with the rest of the demographics.
 
 ```{r 11, fig.cap="Distribution of average flags per User's Sleep by Sex", echo = FALSE ,fig.width=8, fig.height=4, message=FALSE}
 flag_sex_byCust <- sleep_data %>% 
@@ -386,7 +394,7 @@ flag_sex_byCust %>%
   geom_boxplot(fill = "steel blue")+
   labs(x = "Sex", y = "average Flags")
 ```
-
+No differences of average number of flags was displayed between genders. All three type of genders shares similar distributions of flags with the same mean. This indicates that sex have no influence on flags.
 
 ```{r 12, fig.cap="Relationship of average flags per User's Sleep and User's Postal Code Population", echo = FALSE ,fig.width=8, fig.height=4, message=FALSE}
 flag_population_byCust <- sleep_data %>% 
@@ -399,6 +407,8 @@ flag_population_byCust %>%
   labs(x = "Population", y = "average Flags")
 
 ```
+
+Similarly to sex, population also shows no clear trends with the number of average flags.
 
 ### Model Selection
 To identify the root cause for Mingar's some device performing poorly on sleep scores, Simplicity decides to use a Poisson generalized linear mixed model. The first reason to select such a model is due to the nature of the variable we are studying. Flags is a count variable that records the number of red flags of device malfunction over the period of a user's sleep, thus falls under Poisson distribution. Due to the collection method of the data, the data records large amount of observations of sleep from each users, therefore it is appropriate to include customer id as random effect, which makes the model a linear mixed model. From previous data discovery, we learned that flags and sleep duration have a positive linear relation, more flags can potentially appear as sleep lasts longer. To standardized number of flags within the same period of time, log sleep duration is selected to be the offset of the model.
@@ -431,7 +441,7 @@ m2=glmer(flags~emoji_color+(1|cust_id)+0,offset=log(duration),family=poisson,dat
 kbl(broom.mixed::tidy(m2,effects="fixed",exponentiate = TRUE,conf.int = TRUE, conf.type = "Wald")[,], caption = "Summary Table of The Poisson Generalized Linear Mixed Model", digits = 3, format = "markdown", align = "ccccc", padding= 3)
 
 ```
-
+Examining the table of summary, all skin colors are extremely significant to the estimation of the model. As expected Dark have high positive influence on the number of flags, with an increase of 0.033 flags per minute in sleep. All skin colors coefficents are captured within the confidence interval as well.
 
 ### Model Assumptions
 
@@ -445,6 +455,7 @@ For a Poisson generalized linear mixed model to be valid, following assumptions 
 
 4. The model assumes a that the transformed response must have a linear function with predictor variables. Which in this case is $log(Flags)$ and $emoji \\color$.
 
+In conclusion, devices are definitely performing poorly for users with darker skin, particularly with respect to sleep scores.
 ## Discussion
 
 After selecting the most appropriate model for each question, we can now answer
